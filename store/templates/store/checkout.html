@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load url_tags %}
+{% block content %}
+
+
+<div class="container my-5">
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="card">
+				<div class="card-header">
+					<h3>Thông tin nhận hàng</h3>
+					{% if request.user.is_anonymous %}
+					<p>Đăng nhập <a id='login-register-link' href="{% url 'store:login' %}">tại đây</a></p>
+					<p>Đăng ký <a id='login-register-link' href="{% url 'store:register' %}">tại đây</a></p>
+					{% endif %}
+				</div>
+				<div class="card-body">
+					<form method='POST' id='shipping-payment-info'>     
+						<input hidden type="number" value="{{cart_quantity}}" name="cart_quantity">
+						<input hidden type="number" value="{{order_total_price}}" name="total_price">              
+						 {% if not request.user.is_authenticated %}
+						 <div class="mb-2">
+							<input required  value="{{request.user.email}}" type="email" name='email' class='form-control' placeholder='email'>
+						</div>
+						<div class="mb-2">
+						   <input required  value="{{request.user.first_name}}" type="text" name='first_name' class='form-control' placeholder='tên'>
+						</div>
+						<div class="mb-2">
+							<input required  value="{{request.user.last_name}}" type="text" name='last_name' class='form-control' placeholder='họ'>
+						 </div>
+						<div class="mb-2">
+							<input required  value="{{request.user.phone}}" type="tel" name='phone' class='form-control' placeholder='số điện thoại'>
+						 </div>
+						 {% endif %}
+						 <div class="mb-2">
+							<input  type="text" name='address' class='form-control' placeholder='Địa chỉ'>
+						 </div>
+						 <div class="mb-2">
+							<input required  type="text" name='tinh_thanh' class='form-control' placeholder='tỉnh thành'>
+						 </div>
+						 <div class="mb-2">
+							<input required type="text" name='quan_huyen' class='form-control' placeholder='quận huyện'>
+						 </div>
+						 <div class="mb-2">
+							<input required type="text" name='xa_phuong' class='form-control' placeholder='xã phường'>
+						 </div>
+						 <div class="mb-2">
+							<input type="text" name='note' class='form-control' placeholder='ghi chú'>
+						 </div>
+						 <div class='mb-2'>
+							<div class="payment">
+								<label for="payment_method">phương thức thanh toán</label>
+								<select name="payment_method" id="">
+									<option value="COD">thanh toán khi giao hàng</option> 
+									{% comment "Optional note" %}
+									<option value="CC">thẻ ngân hàng, tín dụng</option>	
+									{% endcomment %}
+								</select>
+							</div>
+						 </div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<h3>Đơn hàng</h3>
+			{% for item in items %}
+			<div class='order-item d-flex'>
+				<img src="{{item.product.thumbnailURL}}" alt="{{item.product.name}}">
+				<span class='order-item-number'>{{item.quantity}}</span>
+				<span class='order-item-name'>{{item.product.name}}</span>
+				<span class='order-item-total-money'>{{item.total_price|intcomma}}đ</span>
+			</div>
+			{% endfor %}
+
+
+			<div class='order-total-money d-flex'>
+				<label for="">Tổng cộng: </label>
+				<span>{{order_total_price|intcomma}}đ</span>
+			</div>
+
+			<a class='return-to-cart my-4' href="{% url 'store:cart' %}">Quay về giỏ hàng</a>
+			
+			{% if cart_quantity > 0 %}
+			<button class='place-order' id="place-order-btn">Đặt hàng</button>
+			{% endif %}
+		</div>
+		<div class="col-lg-4"></div>
+	</div>
+</div>
+
+<script>
+let placeOrderBtn = document.getElementById('place-order-btn');
+let form = document.getElementById('shipping-payment-info'); 
+let jsonData = {};
+
+placeOrderBtn.addEventListener('click', (e)=>{
+	e.preventDefault(); 
+	
+	if (form.checkValidity() === false) {
+		alert('Vui lòng điền đầy đủ thông tin!');
+		form.reportValidity(); 
+		return;
+	}
+
+	let formData = new FormData(form);
+	formData.forEach((val, k)=>{
+		jsonData[k] = val;
+	});
+
+	console.log('json data: ', jsonData);
+
+	url = '/api/process_order/'
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type':'application/json',
+			'X-CSRFToken': CSRF_TOKEN
+		},
+		body: JSON.stringify(jsonData)
+	})
+	.then((response)=>{
+		if(!response.ok) {
+			throw new Error(`HTTP error status: ${response.status}`);
+		}
+		return response.json()
+	})
+	.then((data)=>{
+		console.log('data', data)
+		if(data.success === true) {
+			alert('đặt hàng thành công, kiểm tra email để xác nhận đơn hàng')
+			cart = {}
+			document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/;SameSite=Lax';
+			
+			window.location.href = '{% url "store:home" %}'
+		} else if(data.success === false) {
+			alert('có lỗi trong quá trình đặt hàng')
+		}
+
+
+	})
+	.catch((error)=>{
+		console.log('error', error)
+	})
+});
+</script>
+
+{% endblock content %}

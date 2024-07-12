@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+
+<!-- Discount -->
+<section class="py-4 discount-product">
+    <div class="container-lg">
+        <div class="block-title py-2 mb-4">
+            <h2 class="text-center text-uppercase">
+                <a href="{% url 'store:products' %}?sale=on_sale" title="Khuyễn mãi">KHUYẾN MÃI</a>
+            </h2>
+        </div>
+        <div class="row discount-item-banner">
+            <div class="col-lg-6">
+                <div class="row">
+                    {% for product in products_on_sale  %}
+                    <div class="col-sm-6">
+                        {% include 'store/product_card.html' %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-6 col-12 d-flex align-items-center">
+                <img
+                src="{% static 'images/banner_promotion.png' %}"
+                alt=""
+                class="img-fluid mx-auto"
+                title="banner"
+                >
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Discount -->
+
+<!-- new products -->
+<section class="new-products py-4">
+    <div class="container-lg">
+    <div class="block-title py-2 mb-4">
+    <h2 class="text-center text-uppercase">
+        <a href="{% url 'store:products' %}?sort_by=created-desc" title="Hàng mới về">hàng mới về</a>
+    </h2>
+    </div>
+    <div class='row'>
+        {% for product in latest_products %}
+        <div class="col-lg-3 col-sm-6">
+            {% include 'store/product_card.html' %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</section>
+<!-- new products -->
+
+{% endblock content %}

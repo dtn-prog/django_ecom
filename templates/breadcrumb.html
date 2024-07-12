@@ -1,0 +1,16 @@
+{% load static %}
+{% load breadcrumbs %}
+
+{% generate_breadcrumbs as crumbs %}
+
+<!-- breadcrumb -->
+<div class="bread-crumb-container">
+    <div class="container-lg">
+      <ul class="bread-crumb">
+        {% for crumb in crumbs %}
+        <li><a href="{{crumb.url}}">{{crumb.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <!-- breadcrumb -->

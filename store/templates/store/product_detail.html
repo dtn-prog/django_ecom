@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load url_tags %}
+{% block content %}
+
+    <!-- detailed product -->
+    <section class="detailed-product">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-12 col-lg-6">
+              <div class="main-slider">
+                <div>
+                  <img src="{{product.thumbnail.url}}" alt="" />
+                </div>
+                {% for product_image in product_image_set %}
+                    <img src="{{product_image.image.url}}" alt="">
+                {% endfor %}
+              </div>
+              <div class="nav-slider">
+                <div>
+                  <img src="{{product.thumbnail.url}}" alt="" />
+                </div>
+                {% for product_image in product_image_set %}
+                <img src="{{product_image.image.url}}" alt="">
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-6">
+              <h1 class="title-product">{{product.name}}</h1>
+              <div class="price-box">
+                {% if product.is_on_sale %}<span class="old-price px-3">{{product.regular_price|intcomma}} đ</span> {{product.discount_price|intcomma}} đ {% else %} {{product.regular_price|intcomma}} đ {% endif %}
+              </div>
+              <div class="row product-info">
+                <div class="col-12 col-md-6">
+                  <img
+                    src="{% static 'images/image_service_1_product.webp' %}"
+                    alt=""
+                  />
+                  <p>Giao hàng toàn quốc</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <img
+                    src="{% static 'images/image_service_2_product.webp' %}"
+                    alt=""
+                  />
+                  <p>Thanh toán khi nhận hàng</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <img
+                    src="{% static 'images/image_service_3_product.webp' %}"
+                    alt=""
+                  />
+                  <p>Cam kết đổi/trả hàng miễn phí</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <img
+                    src="{% static 'images/image_service_4_product.webp' %}"
+                    alt=""
+                  />
+                  <p>Hàng chính hãng/Bảo hành 10 năm</p>
+                </div>
+              </div>
+              <div class="product-btn">
+                  <div class="number-of-product">
+                      <button id="decrease-quantity-btn" class="decrease">-</button>
+                      <input id="quantity-to-add" type="number" min="1" max="999" step="1" value="1" />
+                      <button id="increase-quantity-btn" class="increase">+</button>
+                  </div>
+                  <button data-quantity="1" data-product-slug="{{product.slug}}" data-action="add" 
+				  class="add-to-cart btn update-cart">Thêm vào giỏ hàng</button>
+                  <button data-quantity="1" data-product-slug="{{product.slug}}" data-action="add_then_checkout" 
+                  class="buy-now btn update-cart">Mua ngay</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <!-- detailed product -->
+  
+    {% include 'store/product_detail_tabs.html' %}
+  
+    <script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const quantityInput = document.getElementById('quantity-to-add');
+			const decreaseBtn = document.getElementById('decrease-quantity-btn');
+			const increaseBtn = document.getElementById('increase-quantity-btn');
+			const addToCartBtn = document.querySelector('.add-to-cart');
+		
+			function updateAddToCartQuantity(value) {
+				addToCartBtn.setAttribute('data-quantity', value);
+			}
+		
+			function updateQuantity(newValue) {
+				newValue = Math.max(1, Math.min(999, newValue));
+				quantityInput.value = newValue;
+				updateAddToCartQuantity(newValue);
+			}
+		
+			// Ensure only numbers are entered and update add-to-cart button quantity
+			quantityInput.addEventListener('input', function(e) {
+				this.value = this.value.replace(/[^0-9]/g, '');
+				
+				let value = parseInt(this.value, 10);
+				if (isNaN(value) || value < 1) value = 1;
+				if (value > 999) value = 999;
+				
+				updateQuantity(value);
+			});
+		
+			// Prevent non-numeric key presses
+			quantityInput.addEventListener('keypress', function(e) {
+				if (e.key < '0' || e.key > '9') {
+					e.preventDefault();
+				}
+			});
+		
+			// Decrease button functionality
+			decreaseBtn.addEventListener('click', function() {
+				let value = parseInt(quantityInput.value, 10);
+				updateQuantity(value - 1);
+			});
+		
+			// Increase button functionality
+			increaseBtn.addEventListener('click', function() {
+				let value = parseInt(quantityInput.value, 10);
+				updateQuantity(value + 1);
+			});
+		
+			// Initialize add-to-cart button quantity
+			updateAddToCartQuantity(quantityInput.value);
+		});
+    </script>
+{% endblock content %}

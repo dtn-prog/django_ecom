@@ -1,0 +1,42 @@
+{% load static %}
+{% load url_tags %}
+
+
+<div class='filter-bar mb-4'>
+    <form action="{% url 'store:products' %}" method='GET'>
+        <div class="row gap-1">
+            <div class="col-lg-2">
+                <input type="search" name="search" id="filter_search" placeholder="tìm kiếm....." value="{{search}}">
+            </div>
+            <div class="col-lg-2">
+                <select class="select-box" name="cat" id="">
+                    <option value="all">Tất Cả Danh mục</option>
+                    {% for category in categories %}
+                    <option {% if category.slug == category_slug %}selected{% endif %} value="{{category.slug}}">{{category.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <select class='select-box' name="sale" id="">
+                    <option {% if sale == 'all' %}selected{% endif %} value="all">Mọi loại giá</option>
+                    <option {% if sale == 'on_sale' %}selected{% endif %} value="on_sale">Đang giảm giá</option>
+                    <option {% if sale == 'not_on_sale' %}selected{% endif %} value="not_on_sale">Không giảm giá</option>
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <select name="sort_by" id="sort_by" class="select-box">
+                    <option {% if sort_option == 'default' %}selected{% endif %} value="default">Mặc định</option>
+                    <option {% if sort_option == 'alpha-asc' %}selected{% endif %} value="alpha-asc">A → Z</option>
+                    <option {% if sort_option == 'alpha-desc' %}selected{% endif %} value="alpha-desc">Z → A</option>
+                    <option {% if sort_option == 'price-asc' %}selected{% endif %} value="price-asc">Giá tăng dần</option>
+                    <option {% if sort_option == 'price-desc' %}selected{% endif %} value="price-desc">Giá giảm dần</option>
+                    <option {% if sort_option == 'created-desc' %}selected{% endif %} value="created-desc">Hàng mới nhất</option>
+                    <option {% if sort_option == 'created-asc' %}selected{% endif %} value="created-asc">Hàng cũ nhất</option>
+                </select>
+            </div>
+            <div class='col-lg-2'>
+                <button type="submit" id='filter_submit' class='btn'>Lọc</button>
+            </div>
+        </div>
+    </form>
+</div>

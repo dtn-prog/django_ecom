@@ -1,0 +1,48 @@
+{% load static %}
+{% load humanize %}
+
+<section class="py-4">
+    <div class="container-lg">
+        <div class="row">
+        <div class="col-lg-8 d-lg-block d-none">
+            <img
+            src="{% static 'images/banner_service.webp' %}"
+            alt=""
+            class="img-fluid"
+            title="banner"
+            >
+        </div>
+        <div class="col-lg-4 col-12">
+            <div class="card-service d-flex">
+            <img src="{% static 'images/thumb_service_1.webp' %}" alt="" class="img-fluid" >
+            <div class="card-service-body">
+                <div class="card-service-title">Thanh toán</div>
+                <div class="card-service-text">
+                Khách hàng có thể lựa chọn một hoặc nhiều hình thức thanh toán
+                </div>
+            </div>
+            </div>
+            <div class="card-service d-flex">
+            <img src="{% static 'images/thumb_service_2.webp' %}" alt="" class="img-fluid" >
+            
+            <div class="card-service-body">
+                <div class="card-service-title">Cam kết chính hãng</div>
+                <div class="card-service-text">
+                Chúng tôi cam kết hàng chính hãng và đảm bảo về chất lượng sản
+                phẩm
+                </div>
+            </div>
+            </div>
+            <div class="card-service d-flex">
+            <img src="{% static 'images/thumb_service_3.webp' %}" alt="" class="img-fluid" >
+            <div class="card-service-body">
+                <div class="card-service-title">Siêu tốc 2H</div>
+                <div class="card-service-text">
+                Dịch vụ giao hàng nhanh 2h trong nội thành Hà Nội
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>

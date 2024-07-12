@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load url_tags %}
+{% block content %}
+
+<div class="container my-5">
+    <h4>Change Password</h4>
+    <form action="{% url 'store:account' request.user.id %}" method="post">
+        {% csrf_token %}
+        {{ form}}
+        <button class='btn btn-outline-info' type="submit">Change Password</button>
+    </form>
+</div>
+{% endblock content %}

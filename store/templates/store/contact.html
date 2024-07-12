@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+    <!-- page -->
+    <section class="page">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h1 class="title-head">Liên Hệ Với Chúng Tôi</h1>
+              <div class="map" id="contact-map">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.294934537685!2d105.79365357488791!3d20.980811380656586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135acc508f938fd%3A0x883e474806a2d1f2!2sAcademy%20of%20Cryptography%20Techniques!5e0!3m2!1sen!2s!4v1700621781740!5m2!1sen!2s"
+                  style="border: 0"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+  
+              <h3>Thông tin liên hệ</h3>
+              <p>
+                Bạn hãy điền nội dung tin nhắn vào form dưới đây và gửi cho chúng
+                tôi. Chúng tôi sẽ trả lời bạn sau khi nhận được.
+              </p>
+              <div class="group-contact"></div>
+              <form action="{% url 'store:contact' %}" method="POST" class="contact">
+                {% csrf_token %}
+                {{form.full_name}}
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    {{form.phone}}
+                  </div>
+                  <div class="col-12 col-md-6">
+                    {{form.email}}
+                  </div>
+                </div>
+                {{form.message}}
+                <div style='display:none;'>{{form.info}}</div>
+                <button type="submit" class="contact">Gửi Tin Nhắn</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- page -->
+
+{% endblock content %}

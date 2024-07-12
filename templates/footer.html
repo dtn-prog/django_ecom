@@ -1,0 +1,74 @@
+{% load static %}
+{% load humanize %}
+{% load url_tags %}
+<footer class="my-4 footer">
+	<div class="container">
+	  <div class="row">
+		<div class="col-12 col-md-6 col-lg-3">
+		  <div class="item">
+			<i class="fa-solid fa-location-dot"></i>
+			<p>
+			  999 Đội Bàn, Phường Xam Xam, Quận Bà Bà, TP Cà Cà
+			</p>
+		  </div>
+		  <div class="item">
+			<i class="fa-solid fa-envelope"></i>
+			<p>
+			  <a href="mailto:man@example.com">man@example.com</a>
+			</p>
+		  </div>
+		  <div class="item">
+			<i class="fa-solid fa-phone"></i>
+			<p>
+			  <a href="tel:+1900 6750">1900 6750 </a>
+			</p>
+		  </div>
+		  <div class="item">
+			<i class="fa-solid fa-map-location-dot"></i>
+			<p>Địa chỉ cửa hàng</p>
+		  </div>
+		</div>
+		<div class="col-12 col-md-6 col-lg-3 position-relative">
+		  <h4 class="title-menu">Hỗ trợ khách hàng</h4>
+		  <label for="collapsible-service" class="collapsible-caret">
+			<i class="fa-solid fa-caret-down"></i>
+		  </label>
+		  <input type="checkbox" id="collapsible-service">
+		  <ul class="collapsible-content">
+			<li><a href="{% url 'store:home' %}" title="trang chủ">Trang chủ</a></li>
+			<li>
+			  <a href="{% url 'store:introduction' %}" title="giới thiệu">Giới Thiệu</a>
+			</li>
+			<li><a href="{% url 'store:products' %}" title="sản phẩm">Sản Phẩm</a></li>
+			<li><a href="{% url 'store:contact' %}" title="liên hệ">Liên Hệ</a></li>
+		  </ul>
+		</div>
+		<div class="col-12 col-md-6 col-lg-3 position-relative">
+		  <h4 class="title-menu policy">chính sách</h4>
+		  <label for="collapse-policy" class="collapsible-caret">
+			<i class="fa-solid fa-caret-down"></i>
+		  </label>
+		  <input type="checkbox" id="collapse-policy">
+		  <ul class="collapsible-content-policy">
+			<li><a href="{% url 'store:home' %}" title="trang chủ">Trang chủ</a></li>
+			<li>
+			  <a href="{% url 'store:introduction' %}" title="giới thiệu">Giới Thiệu</a>
+			</li>
+			<li><a href="{% url 'store:products' %}" title="sản phẩm">Sản Phẩm</a></li>
+			<li><a href="{% url 'store:contact' %}" title="liên hệ">Liên Hệ</a></li>
+		  </ul>
+		</div>
+		<div class="col-12 col-md-6 col-lg-3">
+		  <div class="title-menu">giờ mở cửa</div>
+		  <div class="time">
+			Từ 9:00 - 21:30 tất cả các ngày trong tuần (bao gồm cả các ngày
+			lễ, ngày Tết).
+		  </div>
+
+		  <div class="title-menu">góp ý, khiếu nại</div>
+		  <span class="fa-solid fa-phone"></span>
+		  <span><a href="tel:+1900 6750">1900 6750</a></span>
+		</div>
+	  </div>
+	</div>
+</footer>

@@ -1,0 +1,20 @@
+{% load humanize %}
+{% load url_tags %}
+
+{% if paginated_products.paginator.num_pages > 1 %}
+<div class="pagination">
+  {% if paginated_products.has_previous %}
+  <a href="?{% update_query page=1 %}">&laquo;</a>
+  <a href="?{% update_query page=paginated_products.previous_page_number %}">&larr;</a>
+  {% endif %}
+
+  {% for i in num_pages  %}
+  <a href="?{% update_query page=forloop.counter %}" {% if forloop.counter == paginated_products.number %} class='active' {% endif %}>{{forloop.counter}}</a>
+  {% endfor %}
+  
+  {% if paginated_products.has_next %}
+  <a href="?{% update_query page=paginated_products.next_page_number %}">&rarr;</a>
+  <a href="?{% update_query page=paginated_products.paginator.num_pages %}">&raquo;</a>
+  {% endif %}
+</div>
+{% endif %}

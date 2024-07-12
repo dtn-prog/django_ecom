@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load url_tags %}
+{% block content %}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Đăng ký</h3>
+                    <p>Đã có tài khoản, <a id='login-register-link' href="{% url 'store:login' %}">đăng nhập</a></p>
+                </div>
+                <div class="card-body">
+                    <form method='POST' action='{% url 'store:register' %}'>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{form.username}}
+                            
+                        </div>
+                        <div class="mb-3">
+                            {{form.first_name}}
+        
+                        </div>
+                        <div class="mb-3">
+                            {{form.last_name}}
+                            
+                        </div>
+                        <div class="mb-3">
+                            {{form.email}}
+                            
+                        </div>
+                        <div class="mb-3">
+                            {{form.phone}}
+                           
+                        </div>
+                        <div class="mb-3">
+                            {{form.password1}}
+                            
+                        </div>
+                        <div class="mb-3">
+                            {{form.password2}}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

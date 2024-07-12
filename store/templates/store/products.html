@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load url_tags %}
+{% block content %}
+
+
+    <!-- products view -->
+    <section class="products">
+        <div class="container">
+          {% include 'store/filter_bar.html' %}
+          <div class="row product-grid">
+            {% for product in paginated_products %}
+            <div class="col-lg-3 col-md-4 col-6">
+              {% include 'store/product_card.html' %}
+            </div>
+            {% endfor %}
+          </div>
+          <div>
+          {% include 'store/pagination.html' %}
+        </div>
+      </div>
+    </section>
+    <!-- products view -->
+{% endblock content %}
+	

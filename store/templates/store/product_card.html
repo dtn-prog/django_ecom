@@ -1,0 +1,35 @@
+{% load humanize %}
+{% load url_tags %}
+
+<div class="product-card">
+    <div class="product-card-thumbnail">
+        <img
+        title="{{product.name}}"
+        src="{{product.thumbnailURL}}"
+        alt="{{product.name}}"
+        class="img-fluid"
+        >
+        <div class="product-card-btn w-100 p-1">
+        <button data-quantity="1" data-product-slug="{{product.slug}}" data-action="add_then_checkout" class="buy-btn btn update-cart" title="Mua Ngay">
+            Mua ngay
+        </button>
+        <button
+            data-product-slug="{{product.slug}}" data-action="add" data-quantity="1"
+            class="add-to-cart-button btn update-cart"
+            title="thêm vào giỏ hàng"
+        >
+            <i class="fa fa-shopping-bag"></i>
+        </button>
+        </div>
+    </div>
+    <div class="product-card-body">
+        <div class="product-card-title text-center py-2">
+        <a href="{% url 'store:product_detail' product.slug %}" title="{{product.name}}"
+            >{{product.name}}</a
+        >
+        </div>
+        <div class="product-card-price text-center py-0">
+        {% if product.is_on_sale %}<span class="old-price px-3">{{product.regular_price|intcomma}}</span> {{product.discount_price|intcomma}} {% else %} {{product.regular_price|intcomma}} {% endif %}
+        </div>
+    </div>
+</div>
