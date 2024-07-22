@@ -176,8 +176,7 @@ def process_order(request):
             
             send_mail(
                 'xác nhận đơn hàng',
-                f"nhấn vào link sau để xác nhận hàng: {verification_url}"
-                f"\nsẽ không thể xác nhân sau {order.verification_token_expires.strftime("%Y-%m-%d %H:%M:%S")}",
+                f"nhấn vào link sau để xác nhận hàng: {verification_url}",
                 settings.EMAIL_HOST_USER,
                 [email],
                 fail_silently=False,
