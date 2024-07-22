@@ -112,10 +112,11 @@ def process_order(request):
             )
             
             
+            time_str = order.verification_token_expires.strftime("%Y-%m-%d %H:%M:%S")
             send_mail(
                 'xác nhận đơn hàng',
                 f"nhấn vào link sau để xác nhận hàng: {verification_url} \n"
-                f"\nsẽ không thể xác nhân sau {order.verification_token_expires.strftime("%Y-%m-%d %H:%M:%S")}",
+                f"\nsẽ không thể xác nhân sau {time_str}",
                 settings.EMAIL_HOST_USER,
                 [customer_user.email],
                 fail_silently=False,
