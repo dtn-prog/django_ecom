@@ -160,10 +160,11 @@ INTERNAL_IPS = [
     # ...
 ]
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-# SESSION_COOKIE_SECURE = True  # if using HTTPS
-SESSION_COOKIE_HTTPONLY = True
-SESSION_SAVE_EVERY_REQUEST = True
+# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# # SESSION_COOKIE_SECURE = True  # if using HTTPS
+# SESSION_COOKIE_HTTPONLY = True
+# SESSION_SAVE_EVERY_REQUEST = True
 
 #email
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
